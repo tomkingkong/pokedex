@@ -1,4 +1,5 @@
 import * as helper from './helper.js'
+
 describe('generate-url', () => {
 
   it('should be a generator and return the correct first value', () => {
@@ -14,7 +15,7 @@ describe('generate-url', () => {
     expect(generator.next().value).toEqual("https://pokeapi.co/api/v2/pokemon/?limit=20&offset=20")
   })
 
-  it.only('string should increment correctly', () => {
+  it('string should increment correctly', () => {
     const generator = helper.generateUrl()
     const numerals = [0, 20 , 40, 60, 80, 100, 120, 140]
     const base = 'https://pokeapi.co/api/v2/pokemon/?'
@@ -23,7 +24,6 @@ describe('generate-url', () => {
       expect(generator.next()).toEqual({ value:`${base}limit=20&offset=${numerals[i]}`,
                                         done: false })
     }
-
     expect(generator.next()).toEqual({ value: `${base}limit=11&offset=140`,
                                        done: true})
   })
@@ -38,7 +38,6 @@ describe('generate-url', () => {
     it('should produce the second value', () => {
       const firstExpectation = { value: 0, done: false }
       const secondExpectation = { value: 20, done: false }
-
       const generator = helper.generateOffset()
 
       expect(generator.next()).toEqual(firstExpectation)
@@ -48,6 +47,7 @@ describe('generate-url', () => {
     it('should produce consecutive values', () => {
       const generator = helper.generateOffset()
       const expectations = [0, 20 , 40, 60, 80, 100, 120]
+
       for(let i=0;i <=6; i++) {
         expect(generator.next()).toEqual({ value: expectations[i], done: false})
       }
