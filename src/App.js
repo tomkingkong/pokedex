@@ -5,6 +5,7 @@ import Pokecards from './Pokecards'
 import { generateUrl } from './helpers/helper'
 import { connect } from 'react-redux'
 import { getPokemon } from './actions'
+import data from './data/pokemon.json'
 
 class App extends Component {
   constructor() {
@@ -16,9 +17,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
-    const initialFetch = await fetch(value)
-    const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
+    // const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
+    // const initialFetch = await fetch(value)
+    // const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
+    const pokemon = data
     this.props.handleFetch(pokemon.results)
   }
 

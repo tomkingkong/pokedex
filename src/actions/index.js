@@ -3,10 +3,8 @@ export const getPokemon = (results) => ({
   results
 })
 
-export const addStats = (pokemon, response) => {
-  debugger;
-  return {type: 'ADD_STATS',
+export const addStats = (pokemon, response) => ({
+  type: 'ADD_STATS',
   pokemon,
-  stats: response.stats 
-}
-}
+  stats: response.stats
+})
