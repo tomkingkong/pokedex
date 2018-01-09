@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Pokecards from './Pokecards'
 import { generateUrl } from './helpers/helper'
+import { connect } from 'react-redux'
+import { getPokemon } from './actions'
 
 class App extends Component {
   constructor() {
@@ -14,10 +16,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const { value } = this.generator.next()
+    const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
     const initialFetch = await fetch(value)
-    const pokemon = await initialFetch.json()
-    this.setState({pokemon: pokemon.results})
+    const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
+    this.props.handleFetch(pokemon.results)
   }
 
   morePokemon = async () => {
@@ -25,10 +27,10 @@ class App extends Component {
     if(value) {
       const initialFetch = await fetch(value);
       const pokemon = await initialFetch.json()
-      const newState = [...this.state.pokemon, ...pokemon.results]
-      this.setState({pokemon: newState})
+      this.props.handleFetch(pokemon.results)
     }
   }
+
   render() {
     return (
       <div className="App">
@@ -40,4 +42,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapDispatchToProps = dispatch => ({
+  handleFetch: (results) => dispatch(getPokemon(results))
+})
+
+export default connect(null, mapDispatchToProps)(App);
