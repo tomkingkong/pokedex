@@ -49,13 +49,15 @@ class Pokecards extends Component {
   render() {
     const { pokemon } = this.props
     return(
+      <section>
         <section className='cards'>
             {!pokemon.length ? null : this.mappedPokemon(pokemon)}
-          <button
-            className='moar-pokemon'
-            onClick={this.props.morePokemon}> load moar
-          </button>
         </section>
+        <button
+          className='moar-pokemon'
+          onClick={this.props.morePokemon}> load moar
+        </button>
+      </section>
       )
   }
 
