@@ -15,3 +15,5 @@ export function* generateUrl() {
   }
   return `https://pokeapi.co/api/v2/pokemon/?limit=11&offset=${value}`
 }
+
+export const padNumber = number => number < 10 ? `00${number}` : `0${number}`

@@ -1,25 +1,47 @@
 import React, { Component } from 'react'
 import './Pokecards.css'
+import { getPokemon, addStats } from '../../actions'
 import { connect } from 'react-redux'
-import { addStats } from './actions'
 import Pokemon from 'pokemon-images'
+import { generateUrl, padNumber } from '../../helpers/helper'
+import data from '../../data/pokemon.json'
+
 class Pokecards extends Component {
   constructor() {
     super()
+    this.generator = generateUrl()
   }
 
-  async loadPokemon(creature){
+  async componentDidMount() {
+    // const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
+    // const initialFetch = await fetch(value)
+    // const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
+    const pokemon = data
+    this.props.handleFetch(pokemon.results)
+  }
+
+   loadPokemon = async (creature) => {
     if(!creature.stats) {
       const intialFetch = await fetch(creature.url)
       const response = await intialFetch.json()
       this.props.stats(creature,response)
     }
   }
+
+  morePokemon = async () => {
+    const { value } = this.generator.next()
+    if(value) {
+      const initialFetch = await fetch(value);
+      const pokemon = await initialFetch.json()
+      this.props.handleFetch(pokemon.results)
+    }
+  }
+
   mappedPokemon = (pokemon) => {
     return pokemon.map((creature, index) => (
       <article key={`${creature}-${index}`}
-               className='card'
-               onClick={() => this.loadPokemon(creature)}>
+               className='card'>
+     <h3>{padNumber(index + 1)}</h3>
      <img src={Pokemon.getSprite(creature.name)}/>
     </article>))
   }
@@ -44,6 +66,7 @@ const mapStateToProps = ({getPokemon}) => {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  stats:(pokemon, response) => dispatch(addStats(pokemon,response))
+  stats:(pokemon, response) => dispatch(addStats(pokemon,response)),
+  handleFetch: (results) => dispatch(getPokemon(results))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(Pokecards)
