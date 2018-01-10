@@ -13,7 +13,7 @@ class Pokecards extends Component {
   }
 
   async componentDidMount() {
-    const { value } = this.generator.next() 
+    const { value } = this.generator.next()
     const initialFetch = await fetch(value)
     const pokemon = await initialFetch.json()
     this.props.handleFetch(pokemon.results)
@@ -61,7 +61,7 @@ class Pokecards extends Component {
   }
 }
 
-const mapStateToProps = ({getPokemon}) => (){pokemon:getPokemon})
+const mapStateToProps = ({getPokemon}) => ({pokemon:getPokemon})
 
 const mapDispatchToProps = (dispatch) => ({
   stats:(pokemon, response) => dispatch(addStats(pokemon,response)),
