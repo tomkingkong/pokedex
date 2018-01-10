@@ -1,10 +1,13 @@
 .cards {
+  float: left;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   margin-left: 1em auto;
   width: 25%;
-  height: 100%;
+  height: 40em;
+  overflow-y: scroll;
+
 }
 .card {
   border-style: solid;
@@ -12,6 +15,7 @@
   margin-top: .5em;
   margin-left: .5em;
   margin-right: .5em;
+
 }
 
 .moar-pokemon {
