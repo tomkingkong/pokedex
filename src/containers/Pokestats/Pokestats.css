@@ -1,0 +1,9 @@
+.pokestats-container {
+  position: relative;
+  top: 1em;
+  flex-wrap: wrap;
+  flex-direction: row;
+  float: right;
+  width: 75%;
+  height: 40em;
+}
