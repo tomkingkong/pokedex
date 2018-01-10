@@ -1,4 +1,9 @@
+.pokecards-container {
+  padding-top: 1em;
+}
 .cards {
+  position: relative;
+  top: 2em;
   float: left;
   display: flex;
   flex-wrap: wrap;
@@ -7,7 +12,7 @@
   width: 25%;
   height: 40em;
   overflow-y: scroll;
-
+  padding-bottom: 10px;
 }
 .card {
   border-style: solid;
@@ -15,9 +20,21 @@
   margin-top: .5em;
   margin-left: .5em;
   margin-right: .5em;
-
+  margin-bottom: .5em;
 }
 
 .moar-pokemon {
+  margin-top: 50px;
+  margin-right: 1em;
+  position: relative;
+  font-size: inherit;
+  font-weight: 900;
+  box-shadow: 0 20px crimson;
+  text-transform: uppercase;
+  border: none;
+  bottom: 0;
+  width: 97%;
+  height: 3em;
   margin: 0 auto;
+  background-color: orangered;
 }

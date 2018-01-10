@@ -5,12 +5,12 @@ const getPokemon = (state=[], action) => {
       return [...state, ...action.results]
     }
     case 'ADD_STATS': {
-      const {pokemon, stats} = action
+      const { pokemon, stats } = action
       const index = state.indexOf(pokemon)
-      const newPokemon = Object.assign({stats}, pokemon)
+      const newPokemon = Object.assign({ stats }, pokemon)
       const newState = [...state]
       newState[index] = newPokemon
-      return newState 
+      return newState
     }
     default:
       return state

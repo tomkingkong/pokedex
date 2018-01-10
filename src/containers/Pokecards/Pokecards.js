@@ -16,7 +16,7 @@ class Pokecards extends Component {
     // const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
     // const initialFetch = await fetch(value)
     // const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
-    const pokemon = data
+      const pokemon = data
     this.props.handleFetch(pokemon.results)
   }
 
@@ -41,22 +41,23 @@ class Pokecards extends Component {
     return pokemon.map((creature, index) => (
       <article key={`${creature}-${index}`}
                className='card'>
-     <h3>{padNumber(index + 1)}</h3>
-     <img src={Pokemon.getSprite(creature.name)}/>
+       <h3>{padNumber(index + 1)}</h3>
+       <img src={Pokemon.getSprite(creature.name)}/>
     </article>))
   }
 
   render() {
     const { pokemon } = this.props
     return(
-      <section>
+      <section className='pokecards-container'>
         <section className='cards'>
             {!pokemon.length ? null : this.mappedPokemon(pokemon)}
+            <button
+              className='moar-pokemon'
+              onClick={this.morePokemon}> load moar
+            </button>
         </section>
-        <button
-          className='moar-pokemon'
-          onClick={this.props.morePokemon}> load moar
-        </button>
+
       </section>
       )
   }
