@@ -13,10 +13,9 @@ class Pokecards extends Component {
   }
 
   async componentDidMount() {
-    // const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
-    // const initialFetch = await fetch(value)
-    // const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
-      const pokemon = data
+    const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
+    const initialFetch = await fetch(value)
+    const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
     this.props.handleFetch(pokemon.results)
   }
 
