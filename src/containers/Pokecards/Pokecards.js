@@ -13,9 +13,9 @@ class Pokecards extends Component {
   }
 
   async componentDidMount() {
-    const { value } = this.generator.next() // this is going to give me the url that has my pokemon from the api
+    const { value } = this.generator.next() 
     const initialFetch = await fetch(value)
-    const pokemon = await initialFetch.json() // this is giving an array of pokemon (the first 20)
+    const pokemon = await initialFetch.json()
     this.props.handleFetch(pokemon.results)
   }
 
@@ -56,19 +56,16 @@ class Pokecards extends Component {
               onClick={this.morePokemon}> load moar
             </button>
         </section>
-
       </section>
       )
   }
-
 }
 
-const mapStateToProps = ({getPokemon}) => {
-  return {pokemon:getPokemon}
-}
+const mapStateToProps = ({getPokemon}) => (){pokemon:getPokemon})
 
 const mapDispatchToProps = (dispatch) => ({
   stats:(pokemon, response) => dispatch(addStats(pokemon,response)),
   handleFetch: (results) => dispatch(getPokemon(results))
 })
+
 export default connect(mapStateToProps, mapDispatchToProps)(Pokecards)
