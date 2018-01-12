@@ -11,7 +11,7 @@ class Pokecards extends Component {
     super()
     this.generator = generateUrl()
     this.state = {
-      hidden: false
+      disable: false
     }
   }
 
@@ -19,13 +19,12 @@ class Pokecards extends Component {
     const { value } = this.generator.next()
     const initialFetch = await fetch(value)
     const pokemon = await initialFetch.json()
-    // const pokemon = data
     this.props.handleFetch(pokemon.results)
   }
 
   determainHide = (done) => {
     if(done) {
-      this.setState({hidden: true})
+      this.setState({disable: true})
     }
   }
 
@@ -41,23 +40,23 @@ class Pokecards extends Component {
 
   mappedPokemon = (pokemon) => {
     return pokemon.map((creature, index) => (
-    <article key={`${creature}-${index}`}
+      <article key={`${creature}-${index}`}
                className='card'>
-      <h3>{padNumber(index + 1)}</h3>
-      <img src={Pokemon.getSprite(creature.name)}/>
-    </article>))
+        <h3>{ padNumber(index + 1) }</h3>
+        <img src={Pokemon.getSprite(creature.name)}/>
+      </article>))
   }
 
 
   render() {
     const { pokemon } = this.props
-    const { hidden } = this.state
+    const { disable } = this.state
     return(
       <section className='pokecards-container'>
         <section className='cards'>
             {!pokemon.length ? null : this.mappedPokemon(pokemon)}
             <button
-              disabled={hidden}
+              disabled={disable}
               className='moar-pokemon'
               onClick={this.morePokemon}> load moar
             </button>

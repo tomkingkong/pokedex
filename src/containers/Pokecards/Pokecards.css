@@ -28,7 +28,13 @@
 .card:hover {
   transform: scale(1.04);
 }
+
+.moar-pokemon:hover {
+  transform: scale(1.04);
+}
 .moar-pokemon {
+  transition: all .5s;
+
   margin-top: 50px;
   margin-right: 1em;
   position: relative;
