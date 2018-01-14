@@ -22,10 +22,10 @@ describe('generate-url', () => {
 
     for(let i=0; i <=6; i++) {
       expect(generator.next()).toEqual({ value:`${base}limit=20&offset=${numerals[i]}`,
-                                        done: false })
+                                          done: false })
     }
     expect(generator.next()).toEqual({ value: `${base}limit=11&offset=140`,
-                                       done: true})
+                                        done: true})
   })
 
   describe('Number Generator', () => {

@@ -10,6 +10,9 @@ class Pokecards extends Component {
   constructor() {
     super()
     this.generator = generateUrl()
+    this.state = {
+      disable: false
+    }
   }
 
   async componentDidMount() {
@@ -17,20 +20,17 @@ class Pokecards extends Component {
     const initialFetch = await fetch(value)
     const response = await initialFetch.json()
     const pokemon = addImage(response.results)
-    console.log(pokemon);
     this.props.handleFetch(pokemon)
   }
 
-   loadPokemon = async (creature) => {
-    if(!creature.stats) {
-      const intialFetch = await fetch(creature.url)
-      const response = await intialFetch.json()
-      this.props.stats(creature,response)
+  determainHide = (done) => {
+    if(done) {
+      this.setState({disable: true})
     }
   }
 
   morePokemon = async () => {
-    const { value } = this.generator.next()
+    const { value, done } = this.generator.next()
     if(value) {
       const initialFetch = await fetch(value)
       const response = await initialFetch.json()
@@ -38,8 +38,8 @@ class Pokecards extends Component {
       this.props.handleFetch(pokemon)}
   }
 
-  mappedPokemon = async pokemon => {
-    const unresolved = pokemon.map((creature, index) => (
+  mappedPokemon = pokemon => {
+    return pokemon.map((creature, index) => (
       <article key={`${creature}-${index}`}
                className='card'>
        <h3>{padNumber(index + 1)}</h3>
@@ -47,8 +47,10 @@ class Pokecards extends Component {
     </article>))
   }
 
+
   render() {
     const { pokemon } = this.props
+    const { disable } = this.state
     const render = !pokemon.length ? null : this.mappedPokemon(pokemon)
 
     return(
@@ -56,6 +58,7 @@ class Pokecards extends Component {
         <section className='cards'>
           {render}
             <button
+              disabled={disable}
               className='moar-pokemon'
               onClick={this.morePokemon}> load moar
             </button>
