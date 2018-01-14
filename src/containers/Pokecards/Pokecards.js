@@ -3,7 +3,7 @@ import './Pokecards.css'
 import { getPokemon, addStats } from '../../actions'
 import { connect } from 'react-redux'
 import Pokemon from 'pokemon-images'
-import { generateUrl, padNumber } from '../../helpers/helper'
+import { generateUrl, padNumber, addImage } from '../../helpers/helper'
 import data from '../../data/pokemon.json'
 
 class Pokecards extends Component {
@@ -15,8 +15,10 @@ class Pokecards extends Component {
   async componentDidMount() {
     const { value } = this.generator.next()
     const initialFetch = await fetch(value)
-    const pokemon = await initialFetch.json()
-    this.props.handleFetch(pokemon.results)
+    const response = await initialFetch.json()
+    const pokemon = addImage(response.results)
+    console.log(pokemon);
+    this.props.handleFetch(pokemon)
   }
 
    loadPokemon = async (creature) => {
@@ -30,33 +32,35 @@ class Pokecards extends Component {
   morePokemon = async () => {
     const { value } = this.generator.next()
     if(value) {
-      const initialFetch = await fetch(value);
-      const pokemon = await initialFetch.json()
-      this.props.handleFetch(pokemon.results)
-    }
+      const initialFetch = await fetch(value)
+      const response = await initialFetch.json()
+      const pokemon = addImage(response.results)
+      this.props.handleFetch(pokemon)}
   }
 
-  mappedPokemon = (pokemon) => {
-    return pokemon.map((creature, index) => (
+  mappedPokemon = async pokemon => {
+    const unresolved = pokemon.map((creature, index) => (
       <article key={`${creature}-${index}`}
                className='card'>
        <h3>{padNumber(index + 1)}</h3>
-       <img src={Pokemon.getSprite(creature.name)}/>
+       <img src={creature.image}/>
     </article>))
   }
 
   render() {
     const { pokemon } = this.props
+    const render = !pokemon.length ? null : this.mappedPokemon(pokemon)
+
     return(
       <section className='pokecards-container'>
         <section className='cards'>
-            {!pokemon.length ? null : this.mappedPokemon(pokemon)}
+          {render}
             <button
               className='moar-pokemon'
               onClick={this.morePokemon}> load moar
             </button>
         </section>
-      </section>
+        </section>
       )
   }
 }
