@@ -1,3 +1,5 @@
+import Pokemon from 'pokemon-images'
+
 export function* generateOffset(limit = 140, offset = 0) {
   while(!(offset === limit)) {
     yield offset
@@ -17,3 +19,8 @@ export function* generateUrl() {
 }
 
 export const padNumber = number => number < 10 ? `00${number}` : `0${number}`
+
+export const addImage = arrayOfPokemon => arrayOfPokemon.map(pokemon => ({
+  ...pokemon,
+  image: Pokemon.getSprite(pokemon.name)
+}))

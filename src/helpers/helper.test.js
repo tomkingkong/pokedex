@@ -1,5 +1,5 @@
 import * as helper from './helper.js'
-
+import data from './test-helper/mock-data'
 describe('generate-url', () => {
 
   it('should be a generator and return the correct first value', () => {
@@ -66,6 +66,29 @@ describe('generate-url', () => {
       }
 
       expect(generator.next()).toEqual(expectation)
+    })
+  })
+
+  describe('addImage', () => {
+
+    it('should return an object', () => {
+      expect(Array.isArray(helper.addImage(data))).toBe(true)
+    })
+
+    it('should return an object with a key of image', () => {
+      const expectation = helper.addImage(data)
+
+      expect(expectation[0].image).toBeTruthy()
+    })
+
+    it('should return an object with the correct url', () => {
+      const expectation =  [{
+        url: 'https://pokeapi.co/api/v2/pokemon/1/',
+        name: "bulbasaur",
+        image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png'
+      }]
+
+      expect(helper.addImage(data)).toEqual(expectation)
     })
   })
 })
