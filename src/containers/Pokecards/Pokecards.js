@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import './Pokecards.css'
 import { getPokemon, addStats } from '../../actions'
 import { connect } from 'react-redux'
+import { generateUrl } from '../../helpers/helper'
 import Pokemon from 'pokemon-images'
-import { generateUrl, padNumber } from '../../helpers/helper'
+import Card from '../../components/Card/Card'
 import data from '../../data/pokemon.json'
+import './Pokecards.css'
 
 class Pokecards extends Component {
   constructor() {
@@ -38,11 +39,10 @@ class Pokecards extends Component {
 
   mappedPokemon = (pokemon) => {
     return pokemon.map((creature, index) => (
-      <article key={`${creature}-${index}`}
-               className='card'>
-       <h3>{padNumber(index + 1)}</h3>
-       <img src={Pokemon.getSprite(creature.name)}/>
-    </article>))
+      <Card key={`${creature}-${index}`}
+            index={index}
+            {...creature}
+      /> ))
   }
 
   render() {
@@ -58,7 +58,7 @@ class Pokecards extends Component {
             </button>
         </section>
       </section>
-      )
+    )
   }
 }
 
