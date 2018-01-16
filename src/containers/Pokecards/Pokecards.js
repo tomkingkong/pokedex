@@ -53,7 +53,8 @@ class Pokecards extends Component {
             {!pokemon.length ? null : this.mappedPokemon(pokemon)}
             <button
               className='moar-pokemon'
-              onClick={this.morePokemon}> load moar
+              onClick={this.morePokemon}
+              > load moar
             </button>
         </section>
       </section>
