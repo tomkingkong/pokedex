@@ -20,7 +20,18 @@ export function* generateUrl() {
 
 export const padNumber = number => number < 10 ? `00${number}` : `0${number}`
 
-export const addImage = arrayOfPokemon => arrayOfPokemon.map(pokemon => ({
+export const addImage = (arrayOfPokemon, position) => {
+  return arrayOfPokemon.map(pokemon => ({
   ...pokemon,
-  image: Pokemon.getSprite(pokemon.name)
-}))
+  image: Pokemon.getSprite(pokemon.name),
+  position: position.next().value
+  })
+ )
+}
+
+export function* addPosition(count=1) {
+  while(count <= 151) {
+    yield count
+    count+=1
+  }
+}

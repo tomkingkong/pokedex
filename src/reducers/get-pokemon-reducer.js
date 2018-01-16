@@ -1,5 +1,4 @@
 const getPokemon = (state=[], action) => {
-  console.log(action);
   switch(action.type) {
     case 'GET_POKEMON': {
       return [...state, ...action.results]
