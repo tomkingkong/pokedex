@@ -8,7 +8,7 @@ class Pokestats extends Component {
 
   render() {
     return (
-      <section class='pokestats-container'>
+      <section className='pokestats-container'>
         STATS
       </section>
     )
