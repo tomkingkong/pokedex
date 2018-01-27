@@ -65,7 +65,10 @@ class Pokecards extends Component {
                            src='./pikachu.gif'/> : this.mappedPokemon(pokemon)
 
     const lazy = pokemon.map(pokemon => {
-      return <img src={pokemon.image} onLoad={() => this.lazyLoad(pokemon)} />
+      return <img key= {`${index}-${pokemon.image}`}
+                  src={pokemon.image}
+                  onLoad={() => this.lazyLoad(pokemon)}
+                />
     })
 
     const loadingState = pokemon.length > loaded.length
