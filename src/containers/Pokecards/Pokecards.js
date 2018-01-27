@@ -23,9 +23,6 @@ class Pokecards extends Component {
     this.fetchPokemon(value)
   }
 
-  setStates = (key, value) => {
-    this.setState({ [key]: value })
-  }
 
   fetchPokemon = async (value) => {
     const initialFetch = await fetch(value)
@@ -39,6 +36,8 @@ class Pokecards extends Component {
       action(truthy)
     }
   }
+
+  setStates = (key, value) => this.setState({ [key]: value })
 
   morePokemon = async () => {
     const { value, done } = this.generator.next()
