@@ -20,25 +20,30 @@ class Pokecards extends Component {
 
   componentDidMount = async () => {
     const { value } = this.generator.next()
+    this.fetchPokemon(value)
+  }
+
+  setStates = (key, value) => {
+    this.setState({ [key]: value })
+  }
+
+  fetchPokemon = async (value) => {
     const initialFetch = await fetch(value)
     const response = await initialFetch.json()
     const pokemon = addImage(response.results, this.position)
     this.props.handleFetch(pokemon)
   }
 
-  determainHide = (done) => {
-    if(done) {
-      this.setState({disable: true})
+  composeIf(action, truthy){
+    if(truthy) {
+      action(truthy)
     }
   }
 
   morePokemon = async () => {
     const { value, done } = this.generator.next()
-    if(value) {
-      const initialFetch = await fetch(value)
-      const response = await initialFetch.json()
-      const pokemon = addImage(response.results, this.position)
-      this.props.handleFetch(pokemon)}
+    this.composeIf(this.fetchPokemon, value)
+    this.composeIf(this.setStates.bind(this, 'disable'), done)
   }
 
   mappedPokemon = pokemon => {
@@ -59,9 +64,11 @@ class Pokecards extends Component {
     const { disable, loaded } = this.state
     const render = !pokemon.length ? <img className='loader'
                            src='./pikachu.gif'/> : this.mappedPokemon(pokemon)
+
     const lazy = pokemon.map(pokemon => {
       return <img src={pokemon.image} onLoad={() => this.lazyLoad(pokemon)} />
     })
+
     const loadingState = pokemon.length > loaded.length
 
     return(
