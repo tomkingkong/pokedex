@@ -16,7 +16,7 @@ class Pokecards extends Component {
     this.position = addPosition()
     this.state = {
       disable: false,
-      loaded:[]
+      loading: true
     }
   }
 
@@ -47,23 +47,23 @@ class Pokecards extends Component {
       /> ))
   }
 
-  lazyLoad = (pokemon) => {
-    const loaded = [...this.state.loaded, pokemon].sort((a,b) => a.position - b.position)
-    this.setState({loaded})}
+  shouldLoad = () => this.state.loading ? <img className='loader'
+                                               src='./pikachu.gif'/>
+                                        : this.mappedPokemon()
 
-  shouldLoad = (pokemon,loaded) => !pokemon.length
-                                   ? <img className='loader'src='./pikachu.gif'/>
-                                   : this.mappedPokemon()
-
+  componentWillReceiveProps(nextProps) {
+    const { loaded, pokemon } = nextProps
+    if(loaded.length === pokemon.length) {
+      this.setState({ loading: false })
+    }
+  }
 
   render() {
-    const { pokemon } = this.props
-    const { disable, loaded } = this.state
-
+    const { disable } = this.state
     return(
       <section className='pokecards-container'>
         <section className='cards'>
-          { this.shouldLoad(pokemon, loaded) }
+          { this.shouldLoad() }
             <button
               disabled={disable}
               className='moar-pokemon'

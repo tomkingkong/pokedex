@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { preLoad } from '../../actions'
 import './PreLoadContainer.css'
-const PreLoadContainer = ({ pokemon, preLoad}) => {
+const PreLoadContainer = ({ pokemon, preLoad, loaded}) => {
   const renderedCards = pokemon.map((poke, index) =>
         <img key= {`${index}-${poke.image}`}
              src={poke.image}
@@ -15,8 +15,9 @@ const PreLoadContainer = ({ pokemon, preLoad}) => {
   )
 }
 
-const mapStateToProps = ({getPokemon}) => ({
-  pokemon: getPokemon
+const mapStateToProps = ({getPokemon, loaded}) => ({
+  pokemon: getPokemon,
+  loaded
 })
 
 const mapDispatchToProps = (dispatch) => ({
