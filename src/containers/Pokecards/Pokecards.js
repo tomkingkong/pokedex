@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { getPokemon, addStats } from '../../actions'
-import { connect } from 'react-redux'
 import Pokemon from 'pokemon-images'
+import { getPokemon, preLoad } from '../../actions'
+import { connect } from 'react-redux'
 import Card from '../../components/Card/Card'
 import { generateUrl, addImage, addPosition } from '../../helpers/helper'
+import { fetchPokemon } from '../../helpers/api-utility/api-utility'
 import data from '../../data/pokemon.json'
+import PreLoadContainer from '../PreLoadContainer/PreLoadContainer'
 import './Pokecards.css'
 
 class Pokecards extends Component {
@@ -20,15 +22,7 @@ class Pokecards extends Component {
 
   componentDidMount = async () => {
     const { value } = this.generator.next()
-    this.fetchPokemon(value)
-  }
-
-
-  fetchPokemon = async (value) => {
-    const initialFetch = await fetch(value)
-    const response = await initialFetch.json()
-    const pokemon = addImage(response.results, this.position)
-    this.props.handleFetch(pokemon)
+    fetchPokemon.call(this, this.props.handleFetch, value)
   }
 
   composeIf(action, truthy){
@@ -41,12 +35,12 @@ class Pokecards extends Component {
 
   morePokemon = async () => {
     const { value, done } = this.generator.next()
-    this.composeIf(this.fetchPokemon, value)
+    this.composeIf(fetchPokemon.bind(this, this.props.handleFetch), value)
     this.composeIf(this.setStates.bind(this, 'disable'), done)
   }
 
-  mappedPokemon = pokemon => {
-    return this.state.loaded.map((creature, index) => (
+  mappedPokemon = () => {
+    return this.props.loaded.map((creature, index) => (
       <Card key={`${creature}-${index}`}
             index={index}
             {...creature}
@@ -55,30 +49,21 @@ class Pokecards extends Component {
 
   lazyLoad = (pokemon) => {
     const loaded = [...this.state.loaded, pokemon].sort((a,b) => a.position - b.position)
-    this.setState({loaded})
-  }
+    this.setState({loaded})}
+
+  shouldLoad = (pokemon,loaded) => !pokemon.length
+                                   ? <img className='loader'src='./pikachu.gif'/>
+                                   : this.mappedPokemon()
+
 
   render() {
     const { pokemon } = this.props
     const { disable, loaded } = this.state
-    const render = !pokemon.length ? <img className='loader'
-                           src='./pikachu.gif'/> : this.mappedPokemon(pokemon)
-
-    const lazy = pokemon.map(pokemon => {
-      return <img key= {`${index}-${pokemon.image}`}
-                  src={pokemon.image}
-                  onLoad={() => this.lazyLoad(pokemon)}
-                />
-    })
-
-    const loadingState = pokemon.length > loaded.length
 
     return(
       <section className='pokecards-container'>
         <section className='cards'>
-          {render}
-          { loadingState && <img className='loader'
-                                 src='./pikachu.gif'/> }
+          { this.shouldLoad(pokemon, loaded) }
             <button
               disabled={disable}
               className='moar-pokemon'
@@ -86,21 +71,21 @@ class Pokecards extends Component {
               > load moar
             </button>
         </section>
-        <div className='hidden'>
-          {lazy}
-        </div>
+          <PreLoadContainer/>
       </section>
     )
   }
 }
 
-const mapStateToProps = ({getPokemon}) => ({
-  pokemon: getPokemon
+const mapStateToProps = ({getPokemon, loaded}) => ({
+  pokemon: getPokemon,
+  loaded
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  stats:(pokemon, response) => dispatch(addStats(pokemon,response)),
-  handleFetch: (results) => dispatch(getPokemon(results))
+  handleFetch: results => dispatch(getPokemon(results)),
+  preLoad: pokemon => dispatch(preLoad(pokemon))
 })
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pokecards)
