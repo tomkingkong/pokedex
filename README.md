@@ -24,7 +24,7 @@ Before you move onto itteration 2  you need to start testing your actions, reduc
 
 ## Itteration 2
 
-If you look at the `type` data you'll notice that a `pokemon` array. This contains an array of pokemon id's. You'll have to make a `get` request to `http://localhost:3001/pokemon/:id` to retrieve the corresponding pokemon.
+If you look at the `type` data you'll notice there is a `pokemon` array that contains pokemon id's. You'll have to make a `get` request to `http://localhost:3001/pokemon/:id` to retrieve the corresponding pokemon.
 
 This data should not be displayed until the user clicks on the card. You can solve this any way you'd like. If you decided to use router you might want to consider creating a dynamic route to render the pokemon
 
