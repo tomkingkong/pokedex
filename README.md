@@ -24,7 +24,7 @@ Once you've populated the redux store with all the type data you are going to wa
 
 If you look at the `type` data you'll notice there is a `pokemon` array that contains pokemon id's. You'll have to make a `get` request to `http://localhost:3001/pokemon/:id` to retrieve the corresponding pokemon.
 
-This data should not be displayed until the user clicks on the card. You can solve this any way you'd like. If you decided to use router you might want to consider creating a dynamic route to render the pokemon
+This data should not be displayed or fetched until the user clicks on the card. You can solve this any way you'd like. 
 
 Display the following for each pokemon:
 `name`, `type`(type name), `weight`, and display one of the pokemon `sprites`  
