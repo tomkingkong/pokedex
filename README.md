@@ -31,5 +31,4 @@ Display the following for each pokemon:
 
 ## Extensions
 
-* Testing (actions, reducers, containers and components)
 * Middleware (thunks or sagas)
