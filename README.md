@@ -8,6 +8,11 @@ This application is built from create-react-app
 - `npm start`
 - Pull down the api https://github.com/turingschool-examples/poke-api
 
+Both repositories should be cloned down to your machine, and should sit next to
+each other. You'll need to create a repo on github to push your frontend
+repository to, and then you'll need to change the remote of the frontend app to
+match the repo on github.
+
 ![](./app.gif)
 ## Itteration: 0
 
@@ -24,7 +29,10 @@ Once you've populated the redux store with all the type data you are going to wa
 
 If you look at the `type` data you'll notice there is a `pokemon` array that contains pokemon id's. You'll have to make a `get` request to `http://localhost:3001/pokemon/:id` to retrieve the corresponding pokemon.
 
-This data should not be displayed or fetched until the user clicks on the card. You can solve this any way you'd like. 
+This data should not be fetched until the user clicks on the card. The pokemon
+should be held in the store, not in React state. Also, you shouldn't
+need to make extra fetch calls, so once you've fetched the pokemon for a
+type once, you shouldn't need to do that again.
 
 Display the following for each pokemon:
 `name`, `type`(type name), `weight`, and display one of the pokemon `sprites`  
