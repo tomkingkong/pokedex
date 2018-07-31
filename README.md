@@ -13,6 +13,9 @@ each other. You'll need to create a repo on github to push your frontend
 repository to, and then you'll need to change the remote of the frontend app to
 match the repo on github.
 
+Note: You'll find some 'FAKE' things in the boilerplate, that are there to help
+you get started. You should delete these.
+
 ![](./app.gif)
 ## Itteration: 0
 
