@@ -5,7 +5,7 @@ import React from 'react';
 
 describe('PokeTainer', () => {
   describe('mapStateToProps', () => {
-    it('should get some types', () => {
+    it('should return object with types array', () => {
       const mockState = {
         types: []
       }
@@ -16,7 +16,7 @@ describe('PokeTainer', () => {
   });
 
   describe('mapDispatchToProps', () => {
-    it('should add some types', () => {
+    it('calls a dispatch with a populateTypes action when addPokeTypes is called', () => {
       const mockDispatch = jest.fn();
       const actionToDispatch = actions.populateTypes([]);
       const mappedProps = mapDispatchToProps(mockDispatch);
