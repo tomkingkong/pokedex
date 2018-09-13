@@ -16,6 +16,7 @@ class PokeTainer extends Component {
 
   render() {
     const { types } = this.props;
+    if (!types.length) return (<div className="PokeSection"><img src="pikachu.gif" alt="loading"/></div>)
     const displayPokeTypes = types.map((type, i) => <PokeTypeCard {...type} key={i} />)
     return (
       <div className="PokeSection">

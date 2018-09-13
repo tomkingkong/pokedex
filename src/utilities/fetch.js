@@ -8,15 +8,7 @@ export const fetchCurry = (origin) => (...paths) => {
 
 const pokemon = 'http://localhost:3001/';
 
-//array
 export const fetchTypes = () => fetchCurry(pokemon)('types');
-
-
-//object
 export const fetchTypeSepcific = (id) => fetchCurry(pokemon)('types/', id);
-
-//array
 export const fetchPokemon = () => fetchCurry(pokemon)('pokemon');
-
-//object
 export const fetchPokemonSepcific = (id) => fetchCurry(pokemon)('pokemon/', id);
