@@ -2,7 +2,7 @@
 
 ## Setup
 
-This application is built from create-react-app
+This application is built from create-react-app!
 
 - `npm install`
 - `npm start`
