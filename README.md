@@ -32,10 +32,7 @@ Once you've populated the redux store with all the type data you are going to wa
 
 If you look at the `type` data you'll notice there is a `pokemon` array that contains pokemon id's. You'll have to make a `get` request to `http://localhost:3001/pokemon/:id` to retrieve the corresponding pokemon.
 
-This data should not be fetched until the user clicks on the card. The pokemon
-should be held in the store, not in React state. Also, you shouldn't
-need to make extra fetch calls, so once you've fetched the pokemon for a
-type once, you shouldn't need to do that again.
+This data should not be fetched until the user clicks on the card. You can implement this however you like. Also, you shouldn't need to make extra fetch calls, so once you've fetched the pokemon for a type once, you shouldn't need to do that again.
 
 Display the following for each pokemon:
 `name`, `type`(type name), `weight`, and display one of the pokemon `sprites`  
