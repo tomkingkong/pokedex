@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes, { array, string } from 'prop-types';
+import { fetchPokemonSepcific } from '../../utilities/fetch';
 
 import { PokeCard } from '../PokeCard';
 
@@ -10,25 +10,31 @@ export class PokeTypeCard extends Component {
   constructor() {
     super();
     this.state = {
-      showPokemon: false
+      showPokemon: false,
+      types: []
     }
   }
 
-  handleClick = () => {
+  handleClick = async () => {
+    const { pokemon } = this.props;
+    if (!this.state.types.length) {
+      const types = await Promise.all(pokemon.map( poke => fetchPokemonSepcific(poke)));
+      this.setState({ types });
+    }
     this.setState({ showPokemon: !this.state.showPokemon });
   }
 
   render() {
-    const { name, id, pokemon, storePokemons } = this.props;
-    const { showPokemon } = this.state;
-    const displayPokemon = pokemon.map(poke => {
-      return storePokemons.find(pokemon => pokemon.id === poke);
-    });
+    const { name } = this.props;
+    const { showPokemon, types } = this.state;
+    const displayPokemon = types.map((pokemon, i) => <PokeCard {...pokemon} key={i} />);
 
     return (
-      <div className="PokeTypes">
+      <div className={showPokemon ? "PokeTypes show" : "PokeTypes"} onClick={this.handleClick}>
         <h4>{name}</h4>
-        {showPokemon && displayPokemon}
+        <div className="pokemons">
+          {displayPokemon}
+        </div>
       </div>
     )
   }
@@ -39,6 +45,4 @@ PokeTypeCard.propTypes = {
   name: string
 }
 
-export const mapStateToProps = ({ storePokemons }) => ({ storePokemons });
-
-export default connect(mapStateToProps, null)(PokeTypeCard);
+export default PokeTypeCard;

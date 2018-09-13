@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes, { array, func } from 'prop-types';
 import { connect } from 'react-redux';
-import { populateTypes, populatePokemon } from '../../actions';
-import { fetchTypes, fetchPokemon } from '../../utilities/fetch';
-import { PokeTypeCard } from '../../components/PokeTypeCard';
+import { populateTypes } from '../../actions';
+import { fetchTypes } from '../../utilities/fetch';
+import PokeTypeCard from '../../components/PokeTypeCard';
 
 import './PokeSection.css';
 
@@ -11,14 +11,12 @@ class PokeTainer extends Component {
 
   async componentDidMount() {
     const pokemonTypes = await fetchTypes();
-    const pokemon = await fetchPokemon();
-    this.props.populatePokemon(pokemon);
-    this.props.populateTypes(pokemonTypes);
+    this.props.addPokeTypes(pokemonTypes);
   }
 
   render() {
     const { types } = this.props;
-    const displayPokeTypes = types.map(type => <PokeTypeCard {...type} />)
+    const displayPokeTypes = types.map((type, i) => <PokeTypeCard {...type} key={i} />)
     return (
       <div className="PokeSection">
         {displayPokeTypes}
@@ -29,12 +27,11 @@ class PokeTainer extends Component {
 
 PokeTainer.propTypes = {
   types: array,
-  populateTypes: func.isRequired
+  addPokeTypes: func.isRequired
 };
 
 export const mapStateToProps = ({ types }) => ({ types });
 export const mapDispatchToProps = dispatch => ({ 
-  populateTypes: (types) => dispatch(populateTypes(types)),
-  populatePokemon: (pokemon) => dispatch(populatePokemon(pokemon))
+  addPokeTypes: (types) => dispatch(populateTypes(types))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PokeTainer);

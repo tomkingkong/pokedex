@@ -10,20 +10,7 @@ const pokemon = 'http://localhost:3001/';
 
 //array
 export const fetchTypes = () => fetchCurry(pokemon)('types');
-/*
-[
-  {
-    "id": "1",
-    "name": "normal",
-    "pokemon": [
-      "16",
-      "17",
-      "18",
-      "19",
-      "20"
-    ]
-  },
-] */
+
 
 //object
 export const fetchTypeSepcific = (id) => fetchCurry(pokemon)('types/', id);

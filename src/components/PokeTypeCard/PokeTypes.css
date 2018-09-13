@@ -17,3 +17,23 @@
   border: 0.2rem solid rgba(97, 13, 1, 0.954);
   background: rgba(155, 31, 31, 0.598);
 }
+
+.pokemons {
+  display: block;
+  height: 10rem;
+  max-height: 10rem;
+  overflow: scroll;
+  width: 100%;
+}
+
+.show {
+  height: 15rem;
+}
+
+.show .pokemons{
+  border-top: 0.2rem solid red;
+}
+
+.hide > .pokemons {
+  display: none;
+}
